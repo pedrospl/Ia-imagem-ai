@@ -3,9 +3,16 @@ workflows:
     name: Android Build
     instance_type: mac_mini_m1
     environment:
+      android_sdk_image: latest # Adiciona a imagem do SDK Android
+      flutter_version: 3.22.2 # Necessário para carregar o SDK Android
       groups:
-        - gemini # Adiciona a chave GEMINI_API_KEY que você criou no grupo 'gemini'
+        - gemini
     scripts:
+      - name: Set up Android SDK
+        script: |
+          echo "ANDROID_SDK_ROOT=$CM_ANDROID_SDK_ROOT" >> "$CM_ENV"
+          echo "PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools" >> "$CM_ENV"
+          echo "JAVA_HOME=$CM_JAVA_HOME" >> "$CM_ENV"
       - name: Install Node.js
         script: |
           brew install node
