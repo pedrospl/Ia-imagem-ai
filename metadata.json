@@ -1,0 +1,6 @@
+{
+  "name": "AI Image Generator",
+  "description": "Describe any image you can imagine, and watch it come to life. This application uses Google's Gemini API to generate high-quality images from text prompts.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
