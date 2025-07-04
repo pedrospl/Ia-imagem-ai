@@ -4,30 +4,26 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       groups:
-        - gemini # Este grupo contém sua chave GEMINI_API_KEY
+        - gemini
     scripts:
-      - name: Set up Android SDK
+      - name: Set up Android SDK and Node.js
         script: |
           echo "ANDROID_SDK_ROOT=$CM_ANDROID_SDK_ROOT" >> "$CM_ENV"
           echo "PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools" >> "$CM_ENV"
           echo "JAVA_HOME=$CM_JAVA_HOME" >> "$CM_ENV"
-      - name: Install Node.js and npm dependencies
-        script: |
           brew install node
-          npm install # Instala as dependências do package.json, incluindo Capacitor
-      - name: Initialize Capacitor Project # Este passo cria o capacitor.config.ts e o app ID
+      - name: Install dependencies
         script: |
-          npx cap init "AI Image Generator" "com.pedrospl.iaimagem" --web-dir="dist"
-      - name: Add Android platform # Este passo adiciona a plataforma Android
-        script: |
-          npx cap add android
-      - name: Build web assets # Este passo compila seu código React
+          npm install
+      - name: Build web assets
         script: |
           npm run build
-      - name: Sync with Android # Este passo copia os assets web para o projeto Android
+      - name: Add Android platform and Sync
         script: |
+          # Agora ele vai ler o capacitor.config.ts do seu repo
+          npx cap add android
           npx cap sync android
-      - name: Build Android App # Este passo compila o APK final
+      - name: Build Android App
         script: |
           cd android
           ./gradlew assembleDebug
