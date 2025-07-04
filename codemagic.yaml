@@ -3,8 +3,6 @@ workflows:
     name: Android Build
     instance_type: mac_mini_m1
     environment:
-      android_sdk_image: latest # Adiciona a imagem do SDK Android
-      flutter_version: 3.22.2 # Necessário para carregar o SDK Android
       groups:
         - gemini
     scripts:
