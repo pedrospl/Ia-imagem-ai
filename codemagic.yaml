@@ -17,11 +17,13 @@ workflows:
       - name: Install dependencies
         script: |
           npm install
-      - name: Install Capacitor
+      - name: Initialize & Add Android platform # NOVO PASSO, MAIS CORRETO
         script: |
+          # Instala os pacotes do Capacitor primeiro
           npm install @capacitor/core @capacitor/cli @capacitor/android
-      - name: Add Android platform
-        script: |
+          # Inicializa o projeto Capacitor no ambiente de build
+          npx cap init "AI Image Generator" "com.pedrospl.iaimagem" --web-dir="dist"
+          # Adiciona a plataforma Android
           npx cap add android
       - name: Build web assets
         script: |
