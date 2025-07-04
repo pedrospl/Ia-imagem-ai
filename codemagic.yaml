@@ -1,0 +1,32 @@
+workflows:
+  android-build:
+    name: Android Build
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - gemini # Adiciona a chave GEMINI_API_KEY que você criou no grupo 'gemini'
+    scripts:
+      - name: Install Node.js
+        script: |
+          brew install node
+      - name: Install dependencies
+        script: |
+          npm install
+      - name: Install Capacitor
+        script: |
+          npm install @capacitor/core @capacitor/cli @capacitor/android
+      - name: Add Android platform
+        script: |
+          npx cap add android
+      - name: Build web assets
+        script: |
+          npm run build
+      - name: Sync with Android
+        script: |
+          npx cap sync android
+      - name: Build Android App
+        script: |
+          cd android
+          ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
