@@ -20,10 +20,9 @@ workflows:
       - name: Install project dependencies
         script: |
           npm install
-      - name: Initialize & Add Android platform
+      - name: Add Android platform # RENOMEADO E SIMPLIFICADO
         script: |
-          npx cap init "AI Image Generator" "com.pedrospl.iaimagem" --web-dir="dist"
-          npx cap add android
+          npx cap add android # APENAS ESTE COMANDO
       - name: Build web assets
         script: |
           npm run build
