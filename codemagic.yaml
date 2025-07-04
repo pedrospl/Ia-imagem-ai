@@ -1,0 +1,38 @@
+workflows:
+  android-build:
+    name: Android Build
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - gemini
+    scripts:
+      - name: Set up Android SDK
+        script: |
+          echo "ANDROID_SDK_ROOT=$CM_ANDROID_SDK_ROOT" >> "$CM_ENV"
+          echo "PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools" >> "$CM_ENV"
+          echo "JAVA_HOME=$CM_JAVA_HOME" >> "$CM_ENV"
+      - name: Install Node.js
+        script: |
+          brew install node
+      - name: Install global npm packages
+        script: |
+          npm install -g @capacitor/cli
+      - name: Install project dependencies
+        script: |
+          npm install
+      - name: Initialize & Add Android platform
+        script: |
+          npx cap init "AI Image Generator" "com.pedrospl.iaimagem" --web-dir="dist"
+          npx cap add android
+      - name: Build web assets
+        script: |
+          npm run build
+      - name: Sync with Android
+        script: |
+          npx cap sync android
+      - name: Build Android App
+        script: |
+          cd android
+          ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
