@@ -14,13 +14,14 @@ workflows:
       - name: Install Node.js
         script: |
           brew install node
-      - name: Install dependencies
+      - name: Install global npm packages # NOVO PASSO (para o Capacitor CLI)
+        script: |
+          npm install -g @capacitor/cli
+      - name: Install project dependencies # AGORA AQUI, ANTES DE QUALQUER 'npx cap'
         script: |
           npm install
-      - name: Initialize & Add Android platform # NOVO PASSO, MAIS CORRETO
+      - name: Initialize & Add Android platform
         script: |
-          # Instala os pacotes do Capacitor primeiro
-          npm install @capacitor/core @capacitor/cli @capacitor/android
           # Inicializa o projeto Capacitor no ambiente de build
           npx cap init "AI Image Generator" "com.pedrospl.iaimagem" --web-dir="dist"
           # Adiciona a plataforma Android
