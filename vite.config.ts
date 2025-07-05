@@ -1,11 +1,11 @@
 import { defineConfig, loadEnv } from 'vite';
-import react from '@vitejs/plugin-react'; // Importa o plugin do React
+import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      plugins: [react()], // Adiciona o plugin do React aqui
+      plugins: [react()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
@@ -15,10 +15,10 @@ export default defineConfig(({ mode }) => {
           '@': path.resolve(__dirname, '.'),
         }
       },
-      build: { // Adiciona esta seção de build
+      build: {
         rollupOptions: {
           input: {
-            main: path.resolve(__dirname, 'index.html') // Define o ponto de entrada explicitamente
+            main: path.resolve(__dirname, 'index.html')
           }
         }
       }
